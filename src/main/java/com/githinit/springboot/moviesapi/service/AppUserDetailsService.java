@@ -43,7 +43,7 @@ public class AppUserDetailsService implements UserDetailsService {
         return userDetails;
     }
 
-    public User findByUserName(String userName) {
+    public User findByUserame(String userName) {
         return userRepository.findByUsername(userName);
     }
 }
