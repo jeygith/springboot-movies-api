@@ -3,11 +3,11 @@ package com.githinit.springboot.moviesapi.controller;
 
 import com.githinit.springboot.moviesapi.entity.Movie;
 import com.githinit.springboot.moviesapi.service.MovieService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -15,6 +15,7 @@ import java.util.List;
 public class MovieController {
     // inject movie service
 
+    @Autowired
     private MovieService movieService;
 
     public MovieController(MovieService movieService) {
@@ -35,4 +36,53 @@ public class MovieController {
     public Movie find(@PathVariable int id) {
         return movieService.findById(id);
     }
+
+
+    // add new movie
+    @PostMapping("/movies")
+    public Movie addMovie(@RequestBody Movie movie) {
+        movie.setId(0);
+
+        movie.setCreatedAt(getTimestamp());
+
+        movie.setUpdatedAt(getTimestamp());
+
+        movieService.save(movie);
+
+        return movie;
+    }
+
+    // update movie
+    @PutMapping("/movies")
+    public Movie updateMovie(@RequestBody Movie movie) {
+
+        movie.setUpdatedAt(getTimestamp());
+
+        movieService.save(movie);
+
+        return movie;
+    }
+
+
+    // delete movie by id
+    @DeleteMapping("/movies/{id}")
+    public String deleteMovie(@PathVariable int id) {
+
+        movieService.deleteById(id);
+        return "Deleted movie id - " + id;
+
+    }
+
+
+    private Timestamp getTimestamp() {
+        Date date = new Date();
+
+        long time = date.getTime();
+        System.out.println("Time in Milliseconds: " + time);
+
+        Timestamp ts = new Timestamp(time);
+        System.out.println("Current Time Stamp: " + ts);
+        return ts;
+    }
+
 }

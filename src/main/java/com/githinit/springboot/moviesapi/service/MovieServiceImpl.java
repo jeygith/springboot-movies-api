@@ -2,6 +2,7 @@ package com.githinit.springboot.moviesapi.service;
 
 import com.githinit.springboot.moviesapi.dao.MovieRepository;
 import com.githinit.springboot.moviesapi.entity.Movie;
+import com.githinit.springboot.moviesapi.entity.Review;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,5 +46,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void deleteById(int id) {
         movieRepository.deleteById(id);
+    }
+
+    @Override
+    public void addReview(Review review) {
+
     }
 }

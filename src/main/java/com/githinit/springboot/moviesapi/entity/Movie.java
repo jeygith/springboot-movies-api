@@ -3,6 +3,8 @@ package com.githinit.springboot.moviesapi.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "movies")
@@ -27,25 +29,29 @@ public class Movie {
     private String country;
 
     @Column(name = "created_at")
-    private Timestamp created_at;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at")
-    private Timestamp updated_at;
+    private Timestamp updatedAt;
 
 
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "movie_id")
+    private List<Review> reviews;
 
-    // create constructors
+
+// create constructors
 
     public Movie() {
     }
 
-    public Movie(String name, String plot, String image, String country, Timestamp created_at, Timestamp updated_at) {
+    public Movie(String name, String plot, String image, String country, Timestamp createdAt, Timestamp updatedAt) {
         this.name = name;
         this.plot = plot;
         this.image = image;
         this.country = country;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
 // create getters and setters
@@ -90,25 +96,41 @@ public class Movie {
         this.country = country;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Timestamp getupdated_at() {
-        return updated_at;
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setupdated_at(Timestamp updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
 
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
-    // create tostring method
+    // helper method to add review
+
+    public void addReview(Review review) {
+        if (reviews == null) {
+            reviews = new ArrayList<>();
+        }
+
+        reviews.add(review);
+    }
+
+// create tostring method
 
 
     @Override
@@ -119,8 +141,9 @@ public class Movie {
                 ", plot='" + plot + '\'' +
                 ", image='" + image + '\'' +
                 ", country='" + country + '\'' +
-                ", created_at=" + created_at +
-                ", updated_at=" + updated_at +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", reviews=" + reviews +
                 '}';
     }
 }

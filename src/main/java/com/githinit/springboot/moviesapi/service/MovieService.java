@@ -2,6 +2,7 @@ package com.githinit.springboot.moviesapi.service;
 
 import com.githinit.springboot.moviesapi.dao.MovieRepository;
 import com.githinit.springboot.moviesapi.entity.Movie;
+import com.githinit.springboot.moviesapi.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +17,6 @@ public interface MovieService {
     public void save(Movie movie);
 
     public void deleteById(int id);
+
+    public void addReview(Review review);
 }

@@ -4,5 +4,6 @@ import com.githinit.springboot.moviesapi.entity.Movie;
 import com.githinit.springboot.moviesapi.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MovieRepository extends JpaRepository<Movie, Integer> {
+public interface MovieReviewRepository extends JpaRepository<Review, Integer> {
+
 }
