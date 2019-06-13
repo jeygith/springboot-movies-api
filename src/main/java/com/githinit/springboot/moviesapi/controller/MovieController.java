@@ -4,6 +4,7 @@ package com.githinit.springboot.moviesapi.controller;
 import com.githinit.springboot.moviesapi.entity.Movie;
 import com.githinit.springboot.moviesapi.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -40,6 +41,7 @@ public class MovieController {
 
     // add new movie
     @PostMapping("/movies")
+    @PreAuthorize("hasAuthority('ADMIN_USER')")
     public Movie addMovie(@RequestBody Movie movie) {
         movie.setId(0);
 

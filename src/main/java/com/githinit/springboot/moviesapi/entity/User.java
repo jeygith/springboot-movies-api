@@ -1,6 +1,7 @@
 package com.githinit.springboot.moviesapi.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +15,24 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "username")
+    @NotNull(message = "is required")
+    @Column(name = "username", unique = true)
     private String username;
 
+    @NotNull(message = "is required")
     @Column(name = "password")
     private String password;
 
+    @NotNull(message = "is required")
     @Column(name = "first_name")
     private String firstName;
 
+    @NotNull(message = "is required")
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+    @NotNull(message = "is required")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "created_at")
