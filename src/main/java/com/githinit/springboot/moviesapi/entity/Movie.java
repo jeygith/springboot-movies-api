@@ -32,9 +32,6 @@ public class Movie {
     @Column(name = "deleted_at")
     private Timestamp deleted_at;
 
-    @OneToOne
-    @JoinColumn(name = "genre_id")
-    private String genre;
 
 
     // create constructors
@@ -42,14 +39,13 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String name, String plot, String image, String country, Timestamp created_at, Timestamp deleted_at, String genre) {
+    public Movie(String name, String plot, String image, String country, Timestamp created_at, Timestamp deleted_at) {
         this.name = name;
         this.plot = plot;
         this.image = image;
         this.country = country;
         this.created_at = created_at;
         this.deleted_at = deleted_at;
-        this.genre = genre;
     }
 
 // create getters and setters
@@ -110,13 +106,6 @@ public class Movie {
         this.deleted_at = deleted_at;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
 
 
     // create tostring method
@@ -132,7 +121,6 @@ public class Movie {
                 ", country='" + country + '\'' +
                 ", created_at=" + created_at +
                 ", deleted_at=" + deleted_at +
-                ", genre='" + genre + '\'' +
                 '}';
     }
 }
