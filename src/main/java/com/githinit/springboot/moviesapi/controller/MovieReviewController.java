@@ -66,6 +66,55 @@ public class MovieReviewController {
         return movie;
     }
 
+
+    // add new movie
+    @PutMapping("/reviews")
+    public Movie updateReview(@PathVariable int id, @RequestBody Review review, OAuth2Authentication auth) {
+
+
+        User user = userService.findByUsername(auth.getPrincipal().toString());
+
+        Review movieReview = movieReviewService.findById(review.getId());
+
+        if (movieReview.getUser().getId() != user.getId()) {
+            System.out.println("error in review ownership");
+            throw new RuntimeException("User does not own this review");
+        }
+
+
+        review.setUser(user);
+        review.setCreatedAt(getTimestamp());
+        review.setUpdatedAt(getTimestamp());
+
+        movieReviewService.save(review);
+        System.out.println("\nid: " + id);
+
+        Movie movie = movieService.findById(id);
+
+
+        return movie;
+    }
+
+    // delete review by id
+    @DeleteMapping("/reviews/{reviewId}")
+    public String deleteReview(@PathVariable int id, @PathVariable int reviewId, OAuth2Authentication auth) {
+
+        System.out.println(reviewId);
+
+        User user = userService.findByUsername(auth.getPrincipal().toString());
+
+        Review movieReview = movieReviewService.findById(reviewId);
+
+        if (movieReview.getUser().getId() != user.getId()) {
+            System.out.println("error in review ownership");
+            throw new RuntimeException("User does not own this review");
+        }
+        movieReviewService.deleteById(id);
+
+        return "Deleted movie review id - " + reviewId;
+
+    }
+
     private Timestamp getTimestamp() {
         Date date = new Date();
 
