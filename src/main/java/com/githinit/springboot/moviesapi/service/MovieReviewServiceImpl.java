@@ -31,7 +31,7 @@ public class MovieReviewServiceImpl implements MovieReviewService {
         if (result.isPresent()) {
             review = result.get();
         } else {
-            throw new RuntimeException("Movie not found - " + id);
+            throw new RuntimeException("Movie Review not found - " + id);
         }
 
         return review;

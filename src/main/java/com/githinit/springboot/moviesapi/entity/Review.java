@@ -1,6 +1,8 @@
 package com.githinit.springboot.moviesapi.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.sql.Timestamp;
 
 @Entity
@@ -15,6 +17,9 @@ public class Review {
     private String review;
 
     @Column(name = "rating")
+
+    @Min(value = 0, message = "must be greater than or equal to 5")
+    @Max(value = 5, message = "must be less than or equal to 5")
     private int rating;
 
     @Column
