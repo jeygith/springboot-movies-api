@@ -29,8 +29,8 @@ public class Movie {
     @Column(name = "created_at")
     private Timestamp created_at;
 
-    @Column(name = "deleted_at")
-    private Timestamp deleted_at;
+    @Column(name = "updated_at")
+    private Timestamp updated_at;
 
 
 
@@ -39,13 +39,13 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String name, String plot, String image, String country, Timestamp created_at, Timestamp deleted_at) {
+    public Movie(String name, String plot, String image, String country, Timestamp created_at, Timestamp updated_at) {
         this.name = name;
         this.plot = plot;
         this.image = image;
         this.country = country;
         this.created_at = created_at;
-        this.deleted_at = deleted_at;
+        this.updated_at = updated_at;
     }
 
 // create getters and setters
@@ -98,12 +98,12 @@ public class Movie {
         this.created_at = created_at;
     }
 
-    public Timestamp getDeleted_at() {
-        return deleted_at;
+    public Timestamp getupdated_at() {
+        return updated_at;
     }
 
-    public void setDeleted_at(Timestamp deleted_at) {
-        this.deleted_at = deleted_at;
+    public void setupdated_at(Timestamp updated_at) {
+        this.updated_at = updated_at;
     }
 
 
@@ -120,7 +120,7 @@ public class Movie {
                 ", image='" + image + '\'' +
                 ", country='" + country + '\'' +
                 ", created_at=" + created_at +
-                ", deleted_at=" + deleted_at +
+                ", updated_at=" + updated_at +
                 '}';
     }
 }

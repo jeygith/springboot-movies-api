@@ -1,7 +1,7 @@
 package com.githinit.springboot.moviesapi.service;
 
-import com.githinit.springboot.demo.dao.UserRepository;
-import com.githinit.springboot.demo.entity.User;
+import com.githinit.springboot.moviesapi.dao.UserRepository;
+import com.githinit.springboot.moviesapi.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,13 +33,11 @@ public class AppUserDetailsService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         });
 
-        UserDetails userDetails = new org.springframework.security.core.userdetails.
-                User(user.getUsername(), user.getPassword(), authorities);
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
 
 
         System.out.println("\n\n");
         System.out.println(userDetails);
-
 
 
         return userDetails;
