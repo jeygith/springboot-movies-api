@@ -19,6 +19,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Value("${security.jwt.resource-ids}")
     private String resourceIds;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.resourceId(resourceIds).tokenServices(tokenServices);
@@ -31,6 +38,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/actuator/**", "/api-docs/**").permitAll()
-                .antMatchers("/api/**").authenticated();
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers("/api/**").permitAll();
     }
 }
