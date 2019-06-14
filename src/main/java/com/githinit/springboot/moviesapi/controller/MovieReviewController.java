@@ -2,7 +2,6 @@ package com.githinit.springboot.moviesapi.controller;
 
 import com.githinit.springboot.moviesapi.entity.Movie;
 import com.githinit.springboot.moviesapi.entity.Review;
-import com.githinit.springboot.moviesapi.entity.User;
 import com.githinit.springboot.moviesapi.service.MovieReviewService;
 import com.githinit.springboot.moviesapi.service.MovieService;
 import com.githinit.springboot.moviesapi.service.UserService;
@@ -35,83 +34,34 @@ public class MovieReviewController {
     @GetMapping("/reviews")
     public List<Review> findAll(@PathVariable int id) {
 
-        Movie movie = movieService.findById(id);
+        return movieReviewService.findAll(id);
 
-        List<Review> reviews = movie.getReviews();
-
-        return reviews;
     }
 
     // add new movie
     @PostMapping("/reviews")
     public Movie addReview(@PathVariable int id, @RequestBody Review review, OAuth2Authentication auth) {
 
-        System.out.println(auth.getPrincipal().toString());
-
-        User user = userService.findByUsername(auth.getPrincipal().toString());
-
-        System.out.println("user: " + user);
-
-        Movie movie = movieService.findById(id);
-
-        review.setUser(user);
+        review.setId(0);
         review.setCreatedAt(getTimestamp());
-        review.setUpdatedAt(getTimestamp());
 
-        movie.addReview(review);
-        movie.setUpdatedAt(getTimestamp());
-
-        movieService.save(movie);
-
-        return movie;
+        return movieReviewService.save(id, review, auth);
     }
 
 
-    // add new movie
+    //  update movie reviews
     @PutMapping("/reviews")
     public Movie updateReview(@PathVariable int id, @RequestBody Review review, OAuth2Authentication auth) {
 
+        return movieReviewService.save(id, review, auth);
 
-        User user = userService.findByUsername(auth.getPrincipal().toString());
-
-        Review movieReview = movieReviewService.findById(review.getId());
-
-        if (movieReview.getUser().getId() != user.getId()) {
-            System.out.println("error in review ownership");
-            throw new RuntimeException("User does not own this review");
-        }
-
-
-        review.setUser(user);
-        review.setCreatedAt(getTimestamp());
-        review.setUpdatedAt(getTimestamp());
-
-        movieReviewService.save(review);
-        System.out.println("\nid: " + id);
-
-        Movie movie = movieService.findById(id);
-
-
-        return movie;
     }
 
     // delete review by id
     @DeleteMapping("/reviews/{reviewId}")
     public String deleteReview(@PathVariable int id, @PathVariable int reviewId, OAuth2Authentication auth) {
 
-        System.out.println(reviewId);
-
-        User user = userService.findByUsername(auth.getPrincipal().toString());
-
-        Review movieReview = movieReviewService.findById(reviewId);
-
-        if (movieReview.getUser().getId() != user.getId()) {
-            System.out.println("error in review ownership");
-            throw new RuntimeException("User does not own this review");
-        }
-        movieReviewService.deleteById(id);
-
-        return "Deleted movie review id - " + reviewId;
+        return movieReviewService.deleteById(id, reviewId, auth);
 
     }
 
